@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Formatter</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            height: 300px; /* Increased height for better view */
+            resize: vertical;
+            white-space: pre-wrap; /* Preserve whitespace and wrap text */
+            font-family: monospace; /* Use monospace font for code */
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-sizing: border-box;
+            flex: 1 1 0;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 70%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HTML Formatter</h1>
+
+        <label for="htmlCode">Enter HTML Code:</label>
+        <textarea id="htmlCode"></textarea>
+
+        <div class="button-group">
+            <button onclick="formatHTML()">Format</button>
+            <button onclick="clearText()">Clear</button>
+        </div>
+
+        <div class="instructions">
+            <p><strong>How to use:</strong></p>
+            <p>1. Paste your HTML code into the text area.</p>
+            <p>2. Click the "Format" button to beautify the HTML.</p>
+            <p>3. Click the "Clear" button to clear the text area.</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify-html.min.js"></script> <script>
+        function formatHTML() {
+            const htmlCode = document.getElementById("htmlCode").value;
+
+            try {
+                const formattedHTML = html_beautify(htmlCode, {
+                    indent_size: 4, // Set indentation to 4 spaces
+                    wrap_line_length: 0
+                });
+                document.getElementById("htmlCode").value = formattedHTML;
+            } catch (error) {
+                alert("Invalid HTML code. Please check your input.");
+            }
+        }
+        function clearText(){
+            document.getElementById("htmlCode").value = "";
+        }
+    </script>
+</body>
+</html>
