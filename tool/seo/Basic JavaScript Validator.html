@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Validator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            height: 200px;
+            resize: vertical;
+            font-family: monospace; /* Use monospace for code */
+            white-space: pre-wrap; /* Preserve formatting */
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-sizing: border-box;
+            flex: 1 1 0;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+        #results {
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .error{
+            color: red;
+        }
+        .success{
+            color: green;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 70%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JavaScript Validator</h1>
+
+        <label for="jsCode">Enter JavaScript Code:</label>
+        <textarea id="jsCode"></textarea>
+
+        <div class="button-group">
+            <button onclick="validateJS()">Validate</button>
+            <button onclick="clearText()">Clear</button>
+        </div>
+        <div id="results"></div>
+
+        <div class="instructions">
+            <p><strong>How to use:</strong></p>
+            <p>1. Paste your JavaScript code into the text area.</p>
+            <p>2. Click the "Validate" button.</p>
+            <p>3. The results (errors or a success message) will be displayed below.</p>
+            <p><strong>Note:</strong> This uses basic syntax checking. For more thorough validation and linting, consider using tools like JSLint, JSHint, or ESLint.</p>
+        </div>
+    </div>
+
+    <script>
+        function validateJS() {
+            const jsCode = document.getElementById("jsCode").value;
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "";
+
+            if (jsCode.trim() === "") {
+                resultsDiv.innerHTML = "<p class='error'>Please enter some JavaScript code.</p>";
+                return;
+            }
+
+            try {
+                // Attempt to parse the JS using a Function constructor (basic syntax check)
+                new Function(jsCode);
+                resultsDiv.innerHTML = "<p class='success'>Valid JavaScript syntax (basic check).</p>";
+            } catch (error) {
+                resultsDiv.innerHTML = `<p class='error'>JavaScript syntax error: ${error.message}</p>`;
+            }
+        }
+        function clearText(){
+            document.getElementById("jsCode").value = "";
+            document.getElementById("results").innerHTML = "";
+        }
+    </script>
+</body>
+</html>
