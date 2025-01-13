@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Encoder/Decoder</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            height: 200px;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-sizing: border-box;
+            flex: 1 1 0;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        .options label{
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .options input[type="radio"]{
+            margin-right: 5px;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 70%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text Encoder/Decoder</h1>
+
+        <label for="inputText">Enter Text:</label>
+        <textarea id="inputText"></textarea>
+        <div class="options">
+            <label><input type="radio" name="operation" value="base64encode" checked>Base64 Encode</label>
+            <label><input type="radio" name="operation" value="base64decode">Base64 Decode</label>
+            <label><input type="radio" name="operation" value="base64urlencode">Base64Url Encode</label>
+            <label><input type="radio" name="operation" value="base64urldecode">Base64Url Decode</label>
+            <label><input type="radio" name="operation" value="urlencode">URL Encode</label>
+            <label><input type="radio" name="operation" value="urldecode">URL Decode</label>
+            <label><input type="radio" name="operation" value="md5">MD5 Hash</label>
+            <label><input type="radio" name="operation" value="utf16decode">UTF16 Decode</label>
+            <label><input type="radio" name="operation" value="hexdecode">Hex Decode</label>
+        </div>
+
+        <div class="button-group">
+            <button onclick="processText()">Process</button>
+            <button onclick="clearText()">Clear</button>
+        </div>
+
+        <label for="outputText">Result:</label>
+        <textarea id="outputText" readonly></textarea>
+
+        <div class="instructions">
+            <p><strong>How to use:</strong></p>
+            <p>1. Enter the text you want to process.</p>
+            <p>2. Select the desired operation.</p>
+            <p>3. Click "Process".</p>
+            <p>4. Click "Clear" to clear all fields.</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-md5/0.7.3/md5.min.js"></script>
+    <script>
+        function processText() {
+            const inputText = document.getElementById("inputText").value;
+            const outputText = document.getElementById("outputText");
+            const operation = document.querySelector('input[name="operation"]:checked').value;
+
+            try {
+                let result;
+                switch (operation) {
+                    case "base64encode":
+                        result = btoa(unescape(encodeURIComponent(inputText)));
+                        break;
+                    case "base64decode":
+                        result = decodeURIComponent(escape(atob(inputText)));
+                        break;
+                    case "base64urlencode":
+                        result = btoa(unescape(encodeURIComponent(inputText))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+                        break;
+                    case "base64urldecode":
+                        let base64 = inputText.replace(/-/g, '+').replace(/_/g, '/');
+                        while (base64.length % 4) {
+                            base64 += '=';
+                        }
+                        result = decodeURIComponent(escape(atob(base64)));
+                        break;
+                    case "urlencode":
+                        result = encodeURIComponent(inputText);
+                        break;
+                    case "urldecode":
+                        result = decodeURIComponent(inputText);
+                        break;
+                    case "md5":
+                        result = md5(inputText);
+                        break;
+                    case "utf16decode":
+                        result = utf16decode(inputText);
+                        break;
+                    case "hexdecode":
+                        result = hexDecode(inputText);
+                        break;
+                    default:
+                        result = "Invalid operation";
+                }
+                outputText.value = result;
+            } catch (error) {
+                outputText.value = `Error: ${error.message}`;
+            }
+        }
+
+        function clearText() {
+            document.getElementById("inputText").value = "";
+            document.getElementById("outputText").value = "";
+        }
+        function utf16decode(str) {
+            let result = "";
+            for (let i = 0; i < str.length; i += 2) {
+                result += String.fromCharCode(parseInt(str.substring(i, i + 2), 16));
+            }
+            return result;
+        }
+        function hexDecode(hex) {
+            let str = '';
+            for (let i = 0; i < hex.length; i += 2) {
+                str += String.fromCharCode(parseInt(hex.substring(i, 2), 16));
+            }
+            return str;
+        }
+    </script>
+</body>
+</html>
