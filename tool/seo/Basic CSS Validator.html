@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic CSS Validator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            height: 200px;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-sizing: border-box;
+            flex: 1 1 0;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        #results {
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .error{
+            color: red;
+        }
+        .success{
+            color: green;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 70%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Basic CSS Validator</h1>
+
+        <label for="cssCode">Enter CSS Code:</label>
+        <textarea id="cssCode"></textarea>
+
+        <div class="button-group">
+            <button onclick="validateCSS()">Validate</button>
+            <button onclick="clearText()">Clear</button>
+        </div>
+
+        <div id="results"></div>
+
+        <div class="instructions">
+            <p><strong>How to use:</strong></p>
+            <p>1. Paste your CSS code into the text area.</p>
+            <p>2. Click the "Validate" button.</p>
+            <p>3. The results (errors or a success message) will be displayed below.</p>
+            <p><strong>Note:</strong> This is a <em>basic</em> validator and may not catch all possible CSS errors. For full CSS validation, use a dedicated validator like the <a href="https://jigsaw.w3.org/css-validator/" target="_blank">W3C CSS Validation Service</a>.</p>
+        </div>
+    </div>
+
+    <script>
+        function validateCSS() {
+            const cssCode = document.getElementById("cssCode").value;
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "";
+
+            if (cssCode.trim() === "") {
+                resultsDiv.innerHTML = "<p class='error'>Please enter some CSS code.</p>";
+                return;
+            }
+
+            try {
+                // Create a temporary style element
+                const style = document.createElement('style');
+                style.textContent = cssCode;
+                document.head.appendChild(style);
+
+                // Check for CSS errors (this is a very basic check)
+                if (style.sheet && style.sheet.cssRules) {
+                    if (style.sheet.cssRules.length > 0) {
+                        resultsDiv.innerHTML = "<p class='success'>Valid CSS (basic check).</p>";
+                    } else {
+                        resultsDiv.innerHTML = "<p class='error'>No valid CSS rules found. Check your syntax.</p>";
+                    }
+                } else {
+                    resultsDiv.innerHTML = "<p class='error'>Invalid CSS syntax or browser compatibility issue (very basic check).</p>";
+                }
+
+
+                // Remove the temporary style element
+                document.head.removeChild(style);
+            } catch (error) {
+                resultsDiv.innerHTML = `<p class='error'>An unexpected error occurred: ${error.message}</p>`;
+            }
+        }
+        function clearText(){
+            document.getElementById("cssCode").value = "";
+            document.getElementById("results").innerHTML = "";
+        }
+    </script>
+</body>
+</html>
