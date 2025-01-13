@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robots.txt Tester/Generator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            height: 200px;
+            resize: vertical;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-sizing: border-box;
+            flex: 1 1 0;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+        #results {
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .error{
+            color: red;
+        }
+        .success{
+            color: green;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 70%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Robots.txt Tester/Generator</h1>
+
+        <label for="robotsText">Enter robots.txt Content:</label>
+        <textarea id="robotsText" placeholder="Enter your robots.txt content or leave blank to generate a basic one."></textarea>
+
+        <div class="button-group">
+            <button onclick="generateRobots()">Generate/Test</button>
+            <button onclick="clearText()">Clear</button>
+        </div>
+         <div id="results"></div>
+
+        <div class="instructions">
+            <p><strong>How to use:</strong></p>
+            <p>1. Enter your <code>robots.txt</code> content in the text area, or leave it blank to generate a basic one.</p>
+            <p>2. Click "Generate/Test."</p>
+            <p>3. The generated or tested <code>robots.txt</code> content will be displayed, along with basic validation (if applicable).</p>
+        </div>
+    </div>
+
+    <script>
+        function generateRobots() {
+            const robotsText = document.getElementById("robotsText").value;
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "";
+            let output = "";
+
+            if (robotsText.trim() === "") {
+                 output = "User-agent: *\nDisallow: /";
+                 resultsDiv.innerHTML = "<p class='success'>Basic <code>robots.txt</code> generated (disallowing all bots).</p>";
+            } else {
+                output = robotsText;
+                // Basic check for common syntax (very basic)
+                if (robotsText.includes("User-agent:") && robotsText.includes("Disallow:")) {
+                    resultsDiv.innerHTML = "<p class='success'><code>robots.txt</code> appears to have basic syntax.</p>";
+                } else if (!robotsText.includes("User-agent:")&& !robotsText.includes("Disallow:")) {
+                    resultsDiv.innerHTML = "<p class='error'><code>robots.txt</code> appears to have syntax problems. It needs at least User-agent and Disallow directives.</p>";
+                }
+                else if (!robotsText.includes("User-agent:")) {
+                    resultsDiv.innerHTML = "<p class='error'><code>robots.txt</code> appears to have syntax problems. It needs at least User-agent directive.</p>";
+                }
+                else if (!robotsText.includes("Disallow:")) {
+                    resultsDiv.innerHTML = "<p class='error'><code>robots.txt</code> appears to have syntax problems. It needs at least Disallow directive.</p>";
+                }
+
+
+            }
+            document.getElementById("robotsText").value = output;
+        }
+        function clearText(){
+            document.getElementById("robotsText").value = "";
+            document.getElementById("results").innerHTML = "";
+        }
+    </script>
+</body>
+</html>
