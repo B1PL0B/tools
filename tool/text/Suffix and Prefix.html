@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suffix/Prefix Adder</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            height: 200px;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-sizing: border-box;
+            flex: 1 1 0;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 70%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Suffix/Prefix</h1>
+
+        <label for="prefix">Prefix:</label>
+        <input type="text" id="prefix">
+
+        <label for="suffix">Suffix:</label>
+        <input type="text" id="suffix">
+
+        <label for="text">Enter Text:</label>
+        <textarea id="text"></textarea>
+
+        <div class="button-group">
+            <button onclick="addPrefixSuffix()">Add</button>
+            <button onclick="clearText()">Clear</button>
+        </div>
+
+        <div class="instructions">
+            <p><strong>How to use:</strong></p>
+            <p>1. Enter the desired prefix in the "Prefix" field.</p>
+            <p>2. Enter the desired suffix in the "Suffix" field.</p>
+            <p>3. Enter the text you want to add the prefix and suffix to in the "Enter Text" area.</p>
+            <p>4. Click the "Add" button.</p>
+            <p>5. Click the "Clear" button to clear all fields.</p>
+        </div>
+    </div>
+
+    <script>
+        function addPrefixSuffix() {
+            const prefix = document.getElementById("prefix").value;
+            const suffix = document.getElementById("suffix").value;
+            const text = document.getElementById("text").value;
+
+            const lines = text.split('\n');
+            const resultLines = lines.map(line => {
+                let trimmedLine = line.trim();
+                if (trimmedLine !== "") {
+                    return prefix + trimmedLine + suffix;
+                }
+                return line; // Keep empty lines as they are
+            });
+
+            document.getElementById("text").value = resultLines.join('\n');
+        }
+
+        function clearText() {
+            document.getElementById("text").value = "";
+            document.getElementById("prefix").value = "";
+            document.getElementById("suffix").value = "";
+        }
+    </script>
+</body>
+</html>
