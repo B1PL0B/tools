@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube iFrame Generator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+         #iframeCode{
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            height: 100px;
+            resize: vertical;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-sizing: border-box;
+            flex: 1 1 0;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 70%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>YouTube iFrame Generator</h1>
+
+        <label for="videoUrl">YouTube Video URL:</label>
+        <input type="text" id="videoUrl" placeholder="Enter YouTube video URL (e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ)">
+
+        <label for="width">Width (px or %):</label>
+        <input type="text" id="width" value="560">
+
+        <label for="height">Height (px):</label>
+        <input type="number" id="height" value="315">
+
+        <label for="autoplay">Autoplay:</label>
+        <select id="autoplay">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+        <label for="controls">Show Controls:</label>
+        <select id="controls">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        <label for="start">Start Time (seconds):</label>
+        <input type="number" id="start" value="0">
+        <label for="iframeCode">iFrame Code:</label>
+        <textarea id="iframeCode" readonly></textarea>
+
+        <div class="button-group">
+            <button onclick="generateIframe()">Generate</button>
+            <button onclick="clearText()">Clear</button>
+        </div>
+
+        <div class="instructions">
+            <p><strong>How to use:</strong></p>
+            <p>1. Enter the full YouTube video URL.</p>
+            <p>2. Set the desired width and height.</p>
+            <p>3. Choose autoplay and controls options.</p>
+            <p>4. Set a start time (in seconds, optional).</p>
+            <p>5. Click "Generate" to create the iFrame code.</p>
+            <p>6. Click "Clear" to clear all fields.</p>
+        </div>
+    </div>
+
+    <script>
+        function generateIframe() {
+            const videoUrl = document.getElementById("videoUrl").value;
+            const width = document.getElementById("width").value;
+            const height = document.getElementById("height").value;
+            const autoplay = document.getElementById("autoplay").value;
+            const controls = document.getElementById("controls").value;
+            const start = document.getElementById("start").value;
+            const iframeCode = document.getElementById("iframeCode");
+
+            if (!videoUrl) {
+                iframeCode.value = "Please enter a YouTube video URL.";
+                return;
+            }
+
+            let videoId;
+            try {
+                // Extract video ID (handles various YouTube URL formats)
+                const urlParams = new URL(videoUrl).searchParams;
+                videoId = urlParams.get('v');
+                if (!videoId) {
+                    const shortUrlMatch = videoUrl.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+                    if (shortUrlMatch) {
+                        videoId = shortUrlMatch[1];
+                    }else{
+                        iframeCode.value = "Invalid YouTube URL.";
+                        return;
+                    }
+                }
+            } catch (error) {
+                iframeCode.value = "Invalid YouTube URL.";
+                return;
+            }
+
+            let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=${autoplay}&controls=${controls}`;
+            if (start > 0) {
+                embedUrl += `&start=${start}`;
+            }
+
+            const iframe = `<iframe width="${width}" height="${height}" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            iframeCode.value = iframe;
+        }
+        function clearText(){
+            document.getElementById("videoUrl").value = "";
+            document.getElementById("width").value = "560";
+            document.getElementById("height").value = "315";
+            document.getElementById("start").value = "0";
+            document.getElementById("iframeCode").value = "";
+        }
+    </script>
+</body>
+</html>
