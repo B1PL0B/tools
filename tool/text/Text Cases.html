@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Cases</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select,
+        textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 200px;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            flex: 1 1 0;
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 70%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text Cases</h1>
+
+        <label for="caseSelect">Case:</label>
+        <select id="caseSelect">
+            <option value="upper">UPPER CASE</option>
+            <option value="lower">lower case</option>
+            <option value="title">Title Case</option>
+            <option value="camel">CamelCase</option>
+            <option value="snake">snake_case</option>
+            <option value="hyphen">hyphen-case</option>
+            <option value="dot">dot.Case</option>
+            <option value="alternating">AlTeRnAtinG CASE</option>
+            <option value="switch">SWITCH CASE</option>
+            <option value="random">RaNdoM CAse</option>
+            <option value="sentence">Sentence case</option>
+        </select>
+
+        <label for="inputArea">Enter Your Text:</label>
+        <textarea id="inputArea"></textarea>
+
+        <div class="button-group">
+            <button onclick="changeCase()">Change</button>
+            <button onclick="clearText()">Clear</button>
+        </div>
+
+        <div class="instructions">
+            <p><strong>How to use:</strong></p>
+            <p>1. Select the desired case conversion from the dropdown.</p>
+            <p>2. Enter your text in the text area.</p>
+            <p>3. Click the "Change" button to convert the text.</p>
+            <p>4. Click the "Clear" button to clear the text area.</p>
+        </div>
+    </div>
+
+    <script>
+        function changeCase() {
+            const inputArea = document.getElementById("inputArea");
+            const caseSelect = document.getElementById("caseSelect");
+            const text = inputArea.value;
+            let output = "";
+
+            switch (caseSelect.value) {
+                case "upper":
+                    output = text.toUpperCase();
+                    break;
+                case "lower":
+                    output = text.toLowerCase();
+                    break;
+                case "title":
+                    output = text.toLowerCase().split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
+                    break;
+                case "camel":
+                    output = text.toLowerCase().split(' ').map((s, i) => i === 0 ? s : s.charAt(0).toUpperCase() + s.substring(1)).join('');
+                    break;
+                case "snake":
+                    output = text.toLowerCase().replace(/ /g, '_');
+                    break;
+                case "hyphen":
+                    output = text.toLowerCase().replace(/ /g, '-');
+                    break;
+                case "dot":
+                    output = text.toLowerCase().replace(/ /g, '.');
+                    break;
+                case "alternating":
+                    output = text.split("").map((c, i) => i % 2 === 0 ? c.toUpperCase() : c.toLowerCase()).join("");
+                    break;
+                case "switch":
+                    output = text.split("").map(c => c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()).join("");
+                    break;
+                case "random":
+                    output = text.split("").map(c => Math.random() < 0.5 ? c.toUpperCase() : c.toLowerCase()).join("");
+                    break;
+                case "sentence":
+                    output = text.toLowerCase().replace(/(^\s*\w|[.?!]\s*\w)/g, function(c){return c.toUpperCase();});
+                    break;
+                default:
+                    output = text;
+            }
+
+            inputArea.value = output;
+        }
+
+        function clearText() {
+            document.getElementById("inputArea").value = "";
+        }
+    </script>
+</body>
+</html>
