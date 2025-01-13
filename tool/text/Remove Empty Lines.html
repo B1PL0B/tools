@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Empty Lines</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            height: 300px;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Add gap between buttons */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .button-group button {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-sizing: border-box;
+            flex: 1 1 0; /* Distribute space evenly */
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 70%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Remove Empty Lines</h1>
+        <textarea id="inputArea"></textarea>
+
+        <div class="button-group">
+            <button onclick="removeEmptyLines()">Delete</button>
+            <button onclick="clearText()">Clear</button>
+        </div>
+    </div>
+
+    <script>
+        function removeEmptyLines() {
+            const inputArea = document.getElementById("inputArea");
+            let text = inputArea.value;
+
+            // Remove empty lines using a regular expression
+            text = text.replace(/^\s*[\r\n]+/gm, "");
+
+            inputArea.value = text;
+        }
+
+        function clearText() {
+            document.getElementById("inputArea").value = "";
+        }
+    </script>
+</body>
+</html>
