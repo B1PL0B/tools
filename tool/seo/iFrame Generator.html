@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iFrame Generator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+         #iframeCode{
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            height: 100px;
+            resize: vertical;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-sizing: border-box;
+            flex: 1 1 0;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 70%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>iFrame Generator</h1>
+
+        <label for="url">URL:</label>
+        <input type="text" id="url" placeholder="Enter URL to embed">
+
+        <label for="width">Width (px or %):</label>
+        <input type="text" id="width" value="600">
+
+        <label for="height">Height (px):</label>
+        <input type="number" id="height" value="400">
+
+        <label for="scrolling">Scrolling:</label>
+        <select id="scrolling">
+            <option value="auto">Auto</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        <label for="frameborder">Frame Border:</label>
+        <select id="frameborder">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+        <label for="iframeCode">iFrame Code:</label>
+        <textarea id="iframeCode" readonly></textarea>
+        <div class="button-group">
+            <button onclick="generateIframe()">Generate</button>
+            <button onclick="clearText()">Clear</button>
+        </div>
+
+        <div class="instructions">
+            <p><strong>How to use:</strong></p>
+            <p>1. Enter the URL of the website you want to embed.</p>
+            <p>2. Set the width and height of the iFrame.</p>
+            <p>3. Choose the scrolling and frameborder options.</p>
+            <p>4. Click the "Generate" button. The iFrame code will be generated below.</p>
+            <p>5. Click the "Clear" button to clear all fields.</p>
+        </div>
+    </div>
+
+    <script>
+        function generateIframe() {
+            const url = document.getElementById("url").value;
+            const width = document.getElementById("width").value;
+            const height = document.getElementById("height").value;
+            const scrolling = document.getElementById("scrolling").value;
+            const frameborder = document.getElementById("frameborder").value;
+            const iframeCode = document.getElementById("iframeCode");
+
+            if (!url) {
+                iframeCode.value = "Please enter a URL.";
+                return;
+            }
+
+            let code = `<iframe src="${url}" width="${width}" height="${height}" scrolling="${scrolling}" frameborder="${frameborder}"></iframe>`;
+            iframeCode.value = code;
+        }
+        function clearText(){
+            document.getElementById("url").value = "";
+            document.getElementById("width").value = "600";
+            document.getElementById("height").value = "400";
+            document.getElementById("iframeCode").value = "";
+        }
+    </script>
+</body>
+</html>
