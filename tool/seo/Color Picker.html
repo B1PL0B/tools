@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker/Converter</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"/>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #colorPicker { 
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .output-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .output-group input {
+            flex: 1 1 0;
+            position: relative;
+        }
+
+        .output-group .tooltip {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            visibility: hidden;
+            background-color: black;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 12px;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .output-group input:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 70%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Color Picker/Converter</h1>
+
+        <label for="colorPicker">Pick a Color:</label>
+        <div id="colorPicker"></div> 
+
+        <div class="output-group">
+            <div>
+                <label for="hexValue">HEX:</label>
+                <input type="text" id="hexValue" readonly onclick="copyToClipboard('hexValue')">
+                <span class="tooltip">Click to copy HEX</span>
+            </div>
+            <div>
+                <label for="rgbValue">RGB:</label>
+                <input type="text" id="rgbValue" readonly onclick="copyToClipboard('rgbValue')">
+                <span class="tooltip">Click to copy RGB</span>
+            </div>
+            <div>
+                <label for="hslValue">HSL:</label>
+                <input type="text" id="hslValue" readonly onclick="copyToClipboard('hslValue')">
+                <span class="tooltip">Click to copy HSL</span>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <p><strong>How to use:</strong></p>
+            <p>1. Use the color picker to select a color.</p>
+            <p>2. The HEX, RGB, and HSL values will be automatically updated.</p>
+            <p>3. Click on any of the output fields (HEX, RGB, or HSL) to copy the value to your clipboard.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+    <script>
+        const pickr = Pickr.create({
+            el: '#colorPicker',
+            theme: 'classic',
+            default: '#000000',
+            swatches: [
+                '#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3',
+                '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39',
+                '#ffeb3b', '#ffc107', '#ff9800', '#ff5722', '#795548', '#9e9e9e',
+                '#607d8b'
+            ],
+            components: {
+                preview: true,
+                opacity: true,
+                hue: true,
+                interaction: {
+                    hex: true,
+                    rgba: true,
+                    hsla: true,
+                    input: true,
+                    clear: true,
+                    save: true
+                }
+            }
+        });
+
+        function updateColor() {
+            const color = pickr.getColor();
+            const hex = color.toHEXA().toString();
+            const rgb = color.toRGBA();
+            const hsl = color.toHSLA();
+
+            document.getElementById("hexValue").value = hex;
+            document.getElementById("rgbValue").value = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+            document.getElementById("hslValue").value = `hsl(${hsl[0].toFixed(0)}, ${hsl[1].toFixed(0)}%, ${hsl[2].toFixed(0)}%)`;
+        }
+
+        pickr.on('change', () => {
+            updateColor();
+        });
+
+        function copyToClipboard(id) {
+            const input = document.getElementById(id);
+            input.select();
+            input.setSelectionRange(0, 99999); 
+            navigator.clipboard.writeText(input.value).then(() => {
+                alert(`Copied: ${input.value}`);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
