@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Entity Encoder/Decoder</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            height: 200px;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .button-group button {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-sizing: border-box;
+            flex: 1 1 0;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 70%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HTML Entity Encoder/Decoder</h1>
+
+        <label for="text">Enter Text:</label>
+        <textarea id="text"></textarea>
+
+        <div class="button-group">
+            <button onclick="encodeText()">Encode</button>
+            <button onclick="decodeText()">Decode</button>
+            <button onclick="clearText()">Clear</button>
+        </div>
+
+        <div class="instructions">
+            <p><strong>How to use:</strong></p>
+            <p>1. Enter the text you want to encode or decode in the text area.</p>
+            <p>2. Click the "Encode" button to convert special characters to HTML entities.</p>
+            <p>3. Click the "Decode" button to convert HTML entities back to their original characters.</p>
+            <p>4. Click the "Clear" button to clear the text area.</p>
+        </div>
+    </div>
+
+    <script>
+        function encodeText() {
+            const text = document.getElementById("text").value;
+            const encodedText = text.replace(/[\u00A0-\u9999<>\&]/g, function(i) {
+                return '&#'+i.charCodeAt(0)+';';
+            });
+            document.getElementById("text").value = encodedText;
+        }
+
+        function decodeText() {
+            const text = document.getElementById("text").value;
+            const decodedText = new DOMParser().parseFromString(text, 'text/html').body.textContent;
+            document.getElementById("text").value = decodedText;
+        }
+
+        function clearText() {
+            document.getElementById("text").value = "";
+        }
+    </script>
+</body>
+</html>
