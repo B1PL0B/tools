@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find & Replace</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 200px;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .button-group button {
+            flex: 1 1 0;
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 70%;
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Find & Replace</h1>
+
+        <label for="findText">Find Text:</label>
+        <input type="text" id="findText">
+
+        <label for="replaceWith">Replace With:</label>
+        <input type="text" id="replaceWith">
+
+        <label for="enterText">Enter Text:</label>
+        <textarea id="enterText"></textarea>
+
+        <div class="button-group">
+            <button onclick="findAndReplace()">Find And Replace</button>
+            <button onclick="clearFields()">Clear</button>
+        </div>
+
+        <div class="instructions">
+            <p><strong>How to use:</strong></p>
+            <p>1. Enter the text you want to find in the "Find Text" field.</p>
+            <p>2. Enter the text you want to replace it with in the "Replace With" field.</p>
+            <p>3. Enter the text you want to perform the find and replace on in the "Enter Text" area.</p>
+            <p>4. Click the "Find And Replace" button.</p>
+        </div>
+    </div>
+
+    <script>
+        function findAndReplace() {
+            const findText = document.getElementById("findText").value;
+            const replaceWith = document.getElementById("replaceWith").value;
+            const enterText = document.getElementById("enterText").value;
+
+            if (!findText) {
+                alert("Please enter text to find.");
+                return;
+            }
+
+            const replacedText = enterText.replaceAll(findText, replaceWith);
+            document.getElementById("enterText").value = replacedText;
+        }
+
+        function clearFields() {
+            document.getElementById("findText").value = "";
+            document.getElementById("replaceWith").value = "";
+            document.getElementById("enterText").value = "";
+        }
+    </script>
+</body>
+</html>
