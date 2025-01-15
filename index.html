@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KiRA - Free Tools to Make Everything Simple</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-sans-pro/1.0.0/fonts.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #f97316;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --background: #f8fafc;
+            --card-bg: #ffffff;
+            --hover-bg: #f1f5f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, "SF Pro Display", BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        /* Modern Header */
+        header {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Modern Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 6rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            position: relative;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .hero span {
+            background-color: var(--secondary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        /* Modern Search Bar */
+        .search-bar {
+            max-width: 600px;
+            margin: 2rem auto;
+            display: flex;
+            gap: 0.5rem;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .search-bar button {
+            padding: 1rem 2rem;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .search-bar button:hover {
+            transform: translateY(-1px);
+            background-color: #ea580c;
+        }
+
+        /* Modern Categories Section */
+        .categories {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+
+        .category {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+
+        .category:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-header svg {
+            width: 32px;
+            height: 32px;
+            color: var(--primary);
+        }
+
+        .category-header h2 {
+            color: var(--text-primary);
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Modern Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-item {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .tool-item h3 {
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .tool-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Modern More Button */
+        .more-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--hover-bg);
+            color: var(--primary);
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .more-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Modern Stats Section */
+        .stats {
+            background-color: var(--card-bg);
+            padding: 4rem 1rem;
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .stat-item p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Modern Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 4rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-content p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .category {
+                padding: 1.5rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .search-bar button {
+                width: 100%;
+            }
+
+            .stats-grid {
+                gap: 2rem;
+            }
+
+            .stat-item h3 {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Tablet Responsiveness */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Animation Classes */
+        .hover-lift {
+            transition: transform 0.2s;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Accessibility Improvements */
+        :focus {
+            outline: 3px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<header>
+        <nav>
+            <div class="logo">KiRA</div>
+            <div class="nav-links">
+                <a href="#tools">Tools</a>
+                <a href="#about">About</a>
+                <a href="#support">Support</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Free Tools to Make <span>Everything</span> Simple</h1>
+        <p>We offer PDF, video, image and other online tools to make your life easier</p>
+        <div class="search-bar">
+            <input type="text" placeholder="Search tools...">
+            <button onclick="showAlert()">Search</button>
+        </div>
+    </section>
+
+    <section class="categories">
+        <!-- PDF Tools Category -->
+        <div class="category">
+            <div class="category-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <path d="M14 2v6h6"/>
+                    <path d="M16 13H8"/>
+                    <path d="M16 17H8"/>
+                    <path d="M10 9H8"/>
+                </svg>
+                <h2>PDF Tools</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <h3>PDF to Word</h3>
+                    <p>Convert PDF files to editable Word documents</p>
+                </div>
+                <div class="tool-item">
+                    <h3>PDF Merge</h3>
+                    <p>Combine multiple PDFs into one file</p>
+                </div>
+                <div class="tool-item">
+                    <h3>PDF Compress</h3>
+                    <p>Reduce PDF file size without losing quality</p>
+                </div>
+                <div class="tool-item">
+                    <h3>PDF Split</h3>
+                    <p>Split PDF into multiple files</p>
+                </div>
+            </div>
+            <a href="#" class="more-btn">View More PDF Tools</a>
+        </div>
+
+        <!-- SEO Tools Category -->
+        <div class="category">
+            <div class="category-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2">
+                    <path d="M21 12a9 9 0 1 1-9-9 9 9 0 0 1 9 9z"/>
+                    <path d="M15.5 15.5L19 19"/>
+                </svg>
+                <h2>SEO Tools</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <h3>Keyword Research</h3>
+                    <p>Find the best keywords for your content</p>
+                </div>
+                <div class="tool-item">
+                    <h3>Meta Tag Generator</h3>
+                    <p>Create optimized meta tags for your website</p>
+                </div>
+                <div class="tool-item">
+                    <h3>SERP Preview</h3>
+                    <p>Preview how your page appears in search results</p>
+                </div>
+                <div class="tool-item">
+                    <h3>Robots.txt Generator</h3>
+                    <p>Create and validate robots.txt files</p>
+                </div>
+            </div>
+            <a href="#" class="more-btn">View More SEO Tools</a>
+        </div>
+
+        <!-- Text Tools Category -->
+        <div class="category">
+            <div class="category-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <path d="M14 2v6h6"/>
+                    <path d="M16 13H8"/>
+                    <path d="M16 17H8"/>
+                    <path d="M10 9H8"/>
+                </svg>
+                <h2>Text Tools</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <h3>Text to Speech</h3>
+                    <p>Convert text to natural-sounding speech</p>
+                </div>
+                <div class="tool-item">
+                    <h3>Case Converter</h3>
+                    <p>Convert text case to UPPER, lower, or Title Case</p>
+                </div>
+                <div class="tool-item">
+                    <h3>Lorem Ipsum Generator</h3>
+                    <p>Generate placeholder text for designs</p>
+                </div>
+                <div class="tool-item">
+                    <h3>Word Counter</h3>
+                    <p>Count words, characters, and paragraphs</p>
+                </div>
+            </div>
+            <a href="#" class="more-btn">View More Text Tools</a>
+        </div>
+
+        <!-- Web Tools Category -->
+        <div class="category">
+            <div class="category-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2">
+                    <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm6.32 13.89A7.948 7.948 0 0 1 12 20a7.948 7.948 0 0 1-6.32-3.11M12 20V4"/>
+                    <path d="M2 12h20"/>
+                </svg>
+                <h2>Web Tools</h2>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <h3>URL Encoder</h3>
+                    <p>Encode and decode URLs</p>
+                </div>
+                <div class="tool-item">
+                    <h3>HTML Formatter</h3>
+                    <p>Format and beautify HTML code</p>
+                </div>
+                <div class="tool-item">
+                    <h3>CSS Minifier</h3>
+                    <p>Minify CSS code to reduce file size</p>
+                </div>
+                <div class="tool-item">
+                    <h3>JSON Validator</h3>
+                    <p>Validate and format JSON data</p>
+                </div>
+            </div>
+            <a href="#" class="more-btn">View More Web Tools</a>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>1m+</h3>
+                <p>Active Users</p>
+            </div>
+            <div class="stat-item">
+                <h3>10m+</h3>
+                <p>Files Converted</p>
+            </div>
+            <div class="stat-item">
+                <h3>200+</h3>
+                <p>Online Tools</p>
+            </div>
+            <div class="stat-item">
+                <h3>500k+</h3>
+                <p>PDFs Created</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h3>About KiRA</h3>
+                <p>KiRA provides free online conversion, PDF, and other tools to make your life easier.</p>
+            </div>
+            <div>
+                <h3>Support</h3>
+                <p>Need help? Please reach out to our support team for help.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showAlert() {
+            alert('Search functionality would go here!');
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
