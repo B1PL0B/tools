@@ -216,6 +216,10 @@
             border-radius: 16px;
             transition: all 0.3s ease;
             border: 1px solid rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            color: inherit;
         }
 
         .tool-item:hover {
@@ -381,7 +385,8 @@
         }
     </style>
 </head>
-<header>
+<body>
+    <header>
         <nav>
             <div class="logo">KiRA</div>
             <div class="nav-links">
@@ -401,7 +406,69 @@
         </div>
     </section>
 
-    <section class="categories">
+    <section class="categories" id="tools">
+        <!-- PDF Tools Category -->
+        <div class="category">
+            <div class="category-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <path d="M14 2v6h6"/>
+                    <path d="M16 13H8"/>
+                    <path d="M16 17H8"/>
+                    <path d="M10 9H8"/>
+                </svg>
+                <h2>PDF Tools</h2>
+            </div>
+            <div class="tools-grid">
+                <a href="pdf-to-word.html" class="tool-item">
+                    <h3>PDF to Word</h3>
+                    <p>Convert PDF files to editable Word documents</p>
+                </a>
+                <a href="pdf-merge.html" class="tool-item">
+                    <h3>PDF Merge</h3>
+                    <p>Combine multiple PDFs into one file</p>
+                </a>
+                <a href="pdf-compress.html" class="tool-item">
+                    <h3>PDF Compress</h3>
+                    <p>Reduce PDF file size without losing quality</p>
+                </a>
+                <a href="pdf-split.html" class="tool-item">
+                    <h3>PDF Split</h3>
+                    <p>Split PDF into multiple files</p>
+                </a>
+            </div>
+            <a href="pdf-tools.html" class="more-btn">View More PDF Tools</a>
+        </div>
+
+        <!-- SEO Tools Category -->
+        <div class="category">
+            <div class="category-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2">
+                    <path d="M21 12a9 9 0 1 1-9-9 9 9 0 0 1 9 9z"/>
+                    <path d="M15.5 15.5L19 19"/>
+                </svg>
+                <h2>SEO Tools</h2>
+            </div>
+            <div class="tools-grid">
+                <a href="keyword-research.html" class="tool-item">
+                    <h3>Keyword Research</h3>
+                    <p>Find the best keywords for your content</p>
+                </a>
+                <a href="meta-tag-generator.html" class="tool-item">
+                    <h3>Meta Tag Generator</h3>
+                    <p>Create optimized meta tags for your website</p>
+                </a>
+                <a href="serp-preview.html" class="tool-item">
+                    <h3>SERP Preview</h3>
+                    <p>Preview how your page appears in search results</p>
+                </a>
+                <a href="robots-txt-generator.html" class="tool-item">
+                    <h3>Robots.txt Generator</h3>
+                    <p>Create and validate robots.txt files</p>
+                </a>
+            </div>
+            <a href="seo-tools.html" class="more-btn">View More SEO Tools</a>
+        </div>
 
         <!-- Text Tools Category -->
         <div class="category">
@@ -416,91 +483,25 @@
                 <h2>Text Tools</h2>
             </div>
             <div class="tools-grid">
-                <a href="/Find and Replace.html" />
-                <div class="tool-item">
-                    <h3>Find and Replace</h3>
+                <a href="text-to-speech.html" class="tool-item">
+                    <h3>Text to Speech</h3>
                     <p>Convert text to natural-sounding speech</p>
                 </a>
-                </div>
-                <div class="tool-item">
+                <a href="case-converter.html" class="tool-item">
                     <h3>Case Converter</h3>
                     <p>Convert text case to UPPER, lower, or Title Case</p>
-                </div>
-                <div class="tool-item">
+                </a>
+                <a href="lorem-ipsum-generator.html" class="tool-item">
                     <h3>Lorem Ipsum Generator</h3>
                     <p>Generate placeholder text for designs</p>
-                </div>
-                <div class="tool-item">
+                </a>
+                <a href="word-counter.html" class="tool-item">
                     <h3>Word Counter</h3>
                     <p>Count words, characters, and paragraphs</p>
-                </div>
+                </a>
             </div>
-            <a href="#" class="more-btn">View More Text Tools</a>
+            <a href="text-tools.html" class="more-btn">View More Text Tools</a>
         </div>
-        <!-- PDF Tools Category -->
-        <div class="category">
-            <div class="category-header">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                    <path d="M14 2v6h6"/>
-                    <path d="M16 13H8"/>
-                    <path d="M16 17H8"/>
-                    <path d="M10 9H8"/>
-                </svg>
-                <h2>PDF Tools</h2>
-            </div>
-            <div class="tools-grid">
-                <div class="tool-item">
-                    <h3>PDF to Word</h3>
-                    <p>Convert PDF files to editable Word documents</p>
-                </div>
-                <div class="tool-item">
-                    <h3>PDF Merge</h3>
-                    <p>Combine multiple PDFs into one file</p>
-                </div>
-                <div class="tool-item">
-                    <h3>PDF Compress</h3>
-                    <p>Reduce PDF file size without losing quality</p>
-                </div>
-                <div class="tool-item">
-                    <h3>PDF Split</h3>
-                    <p>Split PDF into multiple files</p>
-                </div>
-            </div>
-            <a href="#" class="more-btn">View More PDF Tools</a>
-        </div>
-
-        <!-- SEO Tools Category -->
-        <div class="category">
-            <div class="category-header">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2">
-                    <path d="M21 12a9 9 0 1 1-9-9 9 9 0 0 1 9 9z"/>
-                    <path d="M15.5 15.5L19 19"/>
-                </svg>
-                <h2>SEO Tools</h2>
-            </div>
-            <div class="tools-grid">
-                <div class="tool-item">
-                    <h3>Keyword Research</h3>
-                    <p>Find the best keywords for your content</p>
-                </div>
-                <div class="tool-item">
-                    <h3>Meta Tag Generator</h3>
-                    <p>Create optimized meta tags for your website</p>
-                </div>
-                <div class="tool-item">
-                    <h3>SERP Preview</h3>
-                    <p>Preview how your page appears in search results</p>
-                </div>
-                <div class="tool-item">
-                    <h3>Robots.txt Generator</h3>
-                    <p>Create and validate robots.txt files</p>
-                </div>
-            </div>
-            <a href="#" class="more-btn">View More SEO Tools</a>
-        </div>
-
-    
 
         <!-- Web Tools Category -->
         <div class="category">
@@ -512,24 +513,24 @@
                 <h2>Web Tools</h2>
             </div>
             <div class="tools-grid">
-                <div class="tool-item">
+                <a href="url-encoder.html" class="tool-item">
                     <h3>URL Encoder</h3>
                     <p>Encode and decode URLs</p>
-                </div>
-                <div class="tool-item">
+                </a>
+                <a href="html-formatter.html" class="tool-item">
                     <h3>HTML Formatter</h3>
                     <p>Format and beautify HTML code</p>
-                </div>
-                <div class="tool-item">
+                </a>
+                <a href="css-minifier.html" class="tool-item">
                     <h3>CSS Minifier</h3>
                     <p>Minify CSS code to reduce file size</p>
-                </div>
-                <div class="tool-item">
+                </a>
+                <a href="json-validator.html" class="tool-item">
                     <h3>JSON Validator</h3>
                     <p>Validate and format JSON data</p>
-                </div>
+                </a>
             </div>
-            <a href="#" class="more-btn">View More Web Tools</a>
+            <a href="web-tools.html" class="more-btn">View More Web Tools</a>
         </div>
     </section>
 
@@ -555,12 +556,12 @@
     </section>
 
     <footer>
-        <div class="footer-content">
+        <div class="footer-content" id="about">
             <div>
                 <h3>About KiRA</h3>
                 <p>KiRA provides free online conversion, PDF, and other tools to make your life easier.</p>
             </div>
-            <div>
+            <div id="support">
                 <h3>Support</h3>
                 <p>Need help? Please reach out to our support team for help.</p>
             </div>
@@ -578,6 +579,17 @@
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
+            });
+        });
+        
+        // Add click event for tools
+        document.querySelectorAll('.tool-item').forEach(tool => {
+            tool.addEventListener('click', function() {
+                // This would navigate to the tool page
+                // For now, we'll show an alert
+                if (!this.href.startsWith('#')) {
+                    alert('Navigating to: ' + this.querySelector('h3').textContent + ' tool');
+                }
             });
         });
     </script>
